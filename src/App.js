@@ -1,25 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from 'react'
+import { API_KEY } from './weather-api-key'
+import './App.css'
 
 function App() {
+  const [weatherData, setWeatherData] = useState(null)
+  const [loaded, setLoaded] = useState(true)
+
+  // Fetch weather data using the name of the city
+  async function fetchWeatherData(cityName) {
+    setLoaded(false)
+    const API = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${API_KEY}&units=metric`
+    // Connect to API. If response is OK, fetch the data and set on state
+    try {
+      const response = await fetch(API)
+      if (response.status === 200) {
+        const data = await response.json()
+        setWeatherData(data)
+      } else {
+        setWeatherData(null)
+      }
+      setLoaded(true)
+    } catch (error) {
+      console.log('Error fetching the data', error)
+    }
+  }
+  useEffect(() => {
+    fetchWeatherData('Montevideo')
+  }, [])
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {
+        !loaded
+          ? <p>Loading...</p>
+          : <p>{JSON.stringify(weatherData)}</p>
+      }
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
