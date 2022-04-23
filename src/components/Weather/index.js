@@ -1,32 +1,39 @@
 import { useEffect, useState } from "react"
+import './style.css'
 
 export default function Weather({ weatherData }) {
-    const [weatherLogo, setWeatherLogo] = useState(null)
+    const [weatherName, setWeatherName] = useState(null)
     const {
         weather,
         name,
         main: { temp, humidity }
     } = weatherData
-    const [{ main }] = weather
+    const [{ main, icon }] = weather
 
     useEffect(() => {
-        setWeatherLogo(getWeatherLogo(main))
+        setWeatherName(getWeatherName(main))
     }, [weatherData, main])
 
-    function getWeatherLogo(weather) {
-        if (weather === 'Snow') return 'snow'
-        if (weather === 'Clear') return 'sunny'
-        if (weather === 'Rain') return 'rainy'
-        if (weather === 'Haze') return 'haze'
-        return 'haze'
+    function getWeatherName(weather) {
+        if (weather === 'Snow') return 'Nieve'
+        if (weather === 'Thunderstorm') return 'Tormenta'
+        if (weather === 'Rain') return 'Lluvioso'
+        if (weather === 'Drizzle') return 'Llovizna'
+        if (weather === 'Haze') return 'Niebla'
+        if (weather === 'Clouds') return 'Nuboso'
+        if (weather === 'Clear') return 'Soleado'
+        return 'Soleado'
     }
 
     return (
-        <div>
-            <small>{name}, Uruguay</small>
-            <h2>{temp} °C</h2>
-            <p>{main}</p>
-            <small>Humedad: {humidity}%</small>
+        <div className="content-wrapper">
+            <img src={`http://openweathermap.org/img/wn/${icon}@2x.png`} alt={`Tiempo en ${name}`} />
+            <div className="info-wrapper">
+                <h2>{temp} °C</h2>
+                <h3>{getWeatherName(main)}</h3>
+                <p>Humedad: {humidity}%</p>
+                <small>{name}, Uruguay</small>
+            </div>
         </div>
     )
 }

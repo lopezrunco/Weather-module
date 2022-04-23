@@ -36,9 +36,7 @@ function App() {
           ? <p>Loading...</p>
           : (weatherData === null)
             ? <p>City not found!</p>
-            // : <p>{JSON.stringify(weatherData)}</p>
             : <Weather weatherData={weatherData} />
-
       }
     </div>
   )

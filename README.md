@@ -2,11 +2,6 @@
 This module based on React.js shows the weather in Montevideo, Uruguay.
 The styles are neutral to make easy the integration in any website.
 
-### Dependencies
-```bash
-"react-icons": "^4.3.1"
-```
-
 ### Instructions
 Install dependencies
 ```bash
