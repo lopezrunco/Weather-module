@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { API_KEY } from './weather-api-key'
+import Weather from './components/Weather'
 import './App.css'
 
 function App() {
@@ -31,9 +32,13 @@ function App() {
   return (
     <div className="App">
       {
-        !loaded
+        (!loaded)
           ? <p>Loading...</p>
-          : <p>{JSON.stringify(weatherData)}</p>
+          : (weatherData === null)
+            ? <p>City not found!</p>
+            // : <p>{JSON.stringify(weatherData)}</p>
+            : <Weather weatherData={weatherData} />
+
       }
     </div>
   )
